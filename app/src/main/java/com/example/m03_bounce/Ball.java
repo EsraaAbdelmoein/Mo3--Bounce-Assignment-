@@ -7,8 +7,8 @@ public class Ball {
     float x, y;
     float speedX, speedY;
     float radius = 50f;
-    int color;
-    private Paint paint;
+    private final int color;
+    private final Paint paint;
 
     public Ball(int color) {
         this.color = color;
@@ -17,7 +17,7 @@ public class Ball {
         this.speedX = 5;
         this.speedY = 3;
         paint = new Paint();
-        paint.setColor(color);
+        paint.setColor(this.color);
     }
 
     public Ball(int color, float x, float y, float dx, float dy) {

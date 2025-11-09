@@ -9,7 +9,7 @@ public class Square {
     public int color;
     public int size = 100;
 
-    private Paint paint = new Paint();
+    private final Paint paint = new Paint();
 
     public Square(int color, float x, float y, float dx, float dy) {
         this.color = color;

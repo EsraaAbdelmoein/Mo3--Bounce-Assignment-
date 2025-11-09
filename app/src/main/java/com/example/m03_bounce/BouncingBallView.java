@@ -47,7 +47,10 @@ public class BouncingBallView extends View {
         balls.add(new Ball(Color.RED, 120, 180, 5, 3));
         balls.add(new Ball(Color.BLUE, 320, 420, -4, 6));
         targetPaint.setColor(Color.BLACK);
+        Ball demoBall = new Ball(android.graphics.Color.RED);
+
         hud.setColor(Color.WHITE);
+
         hud.setTextSize(52f);
         hud.setAntiAlias(true);
     }
