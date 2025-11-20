@@ -19,7 +19,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="14dp"
+<<<<<<< HEAD
         android:text="@string/run_button"
+=======
+        android:text="@string/run_button_text"
+>>>>>>> f5959123c0c6bae7c38312429fc6b214d413f36c
         android:onClick="EsraaButtonPressed"
         app:layout_constraintTop_toBottomOf="@id/custView"
         app:layout_constraintBottom_toBottomOf="parent"

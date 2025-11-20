@@ -7,6 +7,7 @@ import android.graphics.RectF;
 import java.util.Random;
 
 public class Ball {
+<<<<<<< HEAD
 
     float radius = 50;
     float x;
@@ -22,6 +23,22 @@ public class Ball {
         this.ax = ax;
         this.ay = ay;
         this.az = az;
+=======
+    float x, y;
+    float speedX, speedY;
+    float radius = 50f;
+    private final int color;
+    private final Paint paint;
+
+    public Ball(int color) {
+        this.color = color;
+        this.x = radius + 20;
+        this.y = radius + 40;
+        this.speedX = 5;
+        this.speedY = 3;
+        paint = new Paint();
+        paint.setColor(this.color);
+>>>>>>> f5959123c0c6bae7c38312429fc6b214d413f36c
     }
 
     Random r = new Random();

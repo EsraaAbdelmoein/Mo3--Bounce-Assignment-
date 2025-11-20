@@ -19,6 +19,7 @@ public class BouncingBallView extends View {
 
     public BouncingBallView(Context context, AttributeSet attrs) {
         super(context, attrs);
+<<<<<<< HEAD
         box = new Box(Color.BLACK);
         DBtest = new DBClass(context);
         List<DataModel> all = DBtest.findAll();
@@ -37,6 +38,31 @@ public class BouncingBallView extends View {
         setFocusable(true);
         requestFocus();
         setFocusableInTouchMode(true);
+=======
+        box = new Box(Color.YELLOW);
+        balls.add(new Ball(Color.RED, 120, 180, 5, 3));
+        balls.add(new Ball(Color.BLUE, 320, 420, -4, 6));
+        targetPaint.setColor(Color.BLACK);
+        Ball demoBall = new Ball(android.graphics.Color.RED);
+
+        hud.setColor(Color.WHITE);
+
+        hud.setTextSize(52f);
+        hud.setAntiAlias(true);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        if (box != null) box.set(w, h);
+        float rectW = 80f;
+        float rectH = 80f;
+        float cx = w * 0.5f;
+        float cy = h * 0.75f;
+        targetRect.set(cx - rectW / 2f, cy - rectH / 2f, cx + rectW / 2f, cy + rectH / 2f);
+        grad1 = new LinearGradient(0, 0, w, h, Color.parseColor("#FFF176"), Color.parseColor("#FFD54F"), Shader.TileMode.CLAMP);
+        grad2 = new LinearGradient(0, 0, w, h, Color.parseColor("#4FC3C2"), Color.parseColor("#00838F"), Shader.TileMode.CLAMP);
+>>>>>>> f5959123c0c6bae7c38312429fc6b214d413f36c
     }
 
     @Override

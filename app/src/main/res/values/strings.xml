@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">M03_Bounce</string>
+<<<<<<< HEAD
     <string name="run_button">RUN</string>
+=======
+    <string name="run_button_text">RUN</string>
+>>>>>>> f5959123c0c6bae7c38312429fc6b214d413f36c
     <string name="reset_button">RESET</string>
 
 </resources>
