@@ -1,0 +1,140 @@
+package com.example.m03_bounce;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class DBClass extends SQLiteOpenHelper {
+
+    private static final String TAG = "DB";
+
+
+    private static final String DEFAULT_DB_NAME = "bounce.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String TABLE_NAME = "sample_table";
+
+
+    private final String dbName;
+
+
+    public DBClass(Context context) {
+        this(context, DEFAULT_DB_NAME);
+    }
+
+
+    public DBClass(Context context, String databaseName) {
+        super(context, databaseName, null, DATABASE_VERSION);
+        this.dbName = databaseName;
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String createTable = "CREATE TABLE " + TABLE_NAME + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "x REAL, " +
+                "y REAL, " +
+                "dx REAL, " +
+                "dy REAL, " +
+                "color INTEGER, " +
+                "name TEXT)";
+        db.execSQL(createTable);
+        Log.d(TAG, "onCreate executed for DB: " + dbName);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
+        Log.d(TAG, "onUpgrade executed for DB: " + dbName +
+                " oldVersion=" + oldVersion + " newVersion=" + newVersion);
+    }
+
+
+    public void save(DataModel ball) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("x", ball.getModelX());
+        values.put("y", ball.getModelY());
+        values.put("dx", ball.getModelDX());
+        values.put("dy", ball.getModelDY());
+        values.put("color", ball.getColor());
+        values.put("name", ball.getName());
+
+        long id = db.insert(TABLE_NAME, null, values);
+        Log.d(TAG, "save() inserted id=" + id +
+                " x=" + ball.getModelX() +
+                " y=" + ball.getModelY() +
+                " dx=" + ball.getModelDX() +
+                " dy=" + ball.getModelDY() +
+                " color=" + ball.getColor() +
+                " name=" + ball.getName());
+
+        db.close();
+    }
+
+
+    public List<DataModel> findAll() {
+        List<DataModel> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT x, y, dx, dy, color, name FROM " + TABLE_NAME,
+                null
+        );
+
+        if (cursor.moveToFirst()) {
+            do {
+                float x = cursor.getFloat(0);
+                float y = cursor.getFloat(1);
+                float dx = cursor.getFloat(2);
+                float dy = cursor.getFloat(3);
+                int color = cursor.getInt(4);
+                String name = cursor.getString(5);
+
+                list.add(new DataModel(x, y, dx, dy, color, name));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        Log.d(TAG, "findAll() count=" + list.size() + " for DB: " + dbName);
+        return list;
+    }
+
+
+    public int count() {
+        int count = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM " + TABLE_NAME,
+                null
+        );
+
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        Log.d(TAG, "count() = " + count + " for DB: " + dbName);
+        return count;
+    }
+
+
+    public void clear() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int deleted = db.delete(TABLE_NAME, null, null);
+        db.close();
+
+        Log.d(TAG, "clear() deleted rows=" + deleted + " for DB: " + dbName);
+    }
+}
